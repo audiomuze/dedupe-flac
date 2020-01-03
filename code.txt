@@ -1,20 +1,17 @@
 -- first import the text file produced from listing files, their path and FLAC md5sum using bash terminal:
 
---In a bash terminal:
+-- In a bash terminal:
 echo __path:__md5sig > md5sums_target.txt
 find -type f -name \*.flac -print0 | xargs -0 -n1 -P4 metaflac --with-filename --show-md5sum >> md5sums.txt
-add the necessary delimiters to be able to import the file into a sqlite table.
+
+-- add the necessary delimiters to be able to import the file into a sqlite table.
 echo __path:__md5sig:__filename:__dirpath > import.csv && sed ':a;N;$!ba;s/\n/:::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n/g' md5sums.txt >> import.csv
 echo __path:__md5sig:__filename:__dirpath > import.csv && sed ':a;N;$!ba;s/\n/::\n/g' md5sums.txt >> import.csv
-now import the text file produced from listing files, their path and FLAC md5sum
 
--- in SQLite
+-- now import the text file produced from listing files, their path and FLAC md5sum
+-- in SQLite:
 DROP TABLE IF EXISTS audio;
-DROP TABLE IF EXISTS __dirpath_content_concat__md5sig;
-DROP TABLE IF EXISTS __dirpaths_with_same_content;
-DROP TABLE IF EXISTS __dirpaths_with_FLACs_to_kill;
 CREATE TABLE audio (
---    __path                     TEXT UNIQUE,
     __path                     TEXT,
     __md5sig                   TEXT,
     __filename                 TEXT,
