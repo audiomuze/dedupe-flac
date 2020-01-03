@@ -1,6 +1,6 @@
 -- first import the text file produced from listing files, their path and FLAC md5sum using bash terminal:
 
---In a bash termibal:
+--In a bash terminal:
 echo __path:__md5sig > md5sums_target.txt
 find -type f -name \*.flac -print0 | xargs -0 -n1 -P4 metaflac --with-filename --show-md5sum >> md5sums.txt
 add the necessary delimiters to be able to import the file into a sqlite table.
